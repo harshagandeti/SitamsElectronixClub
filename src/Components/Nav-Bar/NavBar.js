@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./NavBar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { TfiMenu } from "react-icons/tfi";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { RiAdminLine } from "react-icons/ri";
 import { toast } from "react-toastify";
-
 import { auth } from "../../Config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { AdminCheckContext } from "../Context/AdminCheckContext";
 
 const NavBar = () => {
   const [clicked, setClicked] = useState(true);
   const Navigate = useNavigate();
+  const { AdminCheck } = useContext(AdminCheckContext);
   const openClick = () => {
     setClicked({ clicked: !clicked });
   };
@@ -20,26 +21,26 @@ const NavBar = () => {
   };
 
   const LoginHandler = () => {
-    const username = sessionStorage.getItem("username");
-    const password = sessionStorage.getItem("password");
-    if (username !== null && password !== null) {
-      const authCheck = signInWithEmailAndPassword(
-        auth,
-        username,
-        password
-      ).then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        toast.success("Login Successfully", {
-          position: toast.POSITION.TOP_CENTER,
-          theme: "colored",
+
+      const username = sessionStorage.getItem("username");
+      const password = sessionStorage.getItem("password");
+      if (username !== null && password !== null) {
+        const authCheck = signInWithEmailAndPassword(
+          auth,
+          username,
+          password
+        ).then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          toast.success("Login Successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            theme: "colored",
+          });
+          Navigate("/admin-dash-board");
         });
-        Navigate("/admin-dash-board");
-        console.log("True Credentials");
-      });
-    }
-    Navigate("/admin-auth");
+      }
+          Navigate("/admin-auth");
+    
   };
 
   return (
@@ -128,7 +129,7 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="navBarRight">
-        <Link className="button" onClick={LoginHandler} to='/admin-auth'>
+        <Link className="button" onClick={LoginHandler} to="/admin-auth" >
           <RiAdminLine />
           <span>Admin</span>
         </Link>

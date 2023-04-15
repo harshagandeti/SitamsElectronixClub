@@ -1,7 +1,7 @@
 .Main-Div {
     width: 100%;
     min-height: 100vh;
-    padding: 20px;
+    padding: 20px 10px;
     display: flex;
     flex-wrap: wrap;
 
@@ -9,7 +9,7 @@
         width: 280px;
         height: 350px;
         background-color: #fff;
-        margin: 20px;
+        margin: 10px;
         box-shadow: 1px 10px 10px 2px rgba(66, 66, 66, 0.717);
         position: relative;
 
@@ -19,8 +19,8 @@
             background-image: linear-gradient(to right, rgb(255, 51, 0), blue);
 
             .img-div {
-                width: 120px;
-                height: 120px;
+                width: 150px;
+                height: 150px;
                 transform: translate(80px, 45px);
                 border-radius: 50%;
 
@@ -52,7 +52,7 @@
 
                 }
 
-                h5 {
+                h6 {
                     margin: 5px 0;
                     font-weight: normal;
                 }

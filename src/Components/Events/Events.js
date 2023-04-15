@@ -19,6 +19,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { AdminCheckContext } from "../Context/AdminCheckContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Events = (props) => {
@@ -27,11 +28,11 @@ const Events = (props) => {
   const [cardColor, setColor] = useState("");
   const [index, setindex] = useState(0);
 const {AdminCheck}=useContext(AdminCheckContext)
-
+const Navigate=useNavigate()
 
   useEffect(() => {
     const eventSnapshots = onSnapshot(
-      collection(db, "NewEvents"),
+      collection(db, "Admin-Add-Events"),
       (Snapshots) => {
         const filterData = Snapshots.docs.map((doc) => ({
           ...doc.data(),
@@ -51,7 +52,7 @@ const {AdminCheck}=useContext(AdminCheckContext)
   const deleteHandler = async(ID) => {
     console.log(ID)
     const {id}=ID
-    const eventDeleteDoc = doc(db, "NewEvents", id);
+    const eventDeleteDoc = doc(db, "Admin-Add-Events", id);
     await deleteDoc(eventDeleteDoc);
     toast.warning("Event Details deleted successfully",{
       position:toast.POSITION.TOP_CENTER,

@@ -16,7 +16,7 @@ export const AdminCheckContextProvider = ({ children }) => {
 
   return (
     <AdminCheckContext.Provider
-      value={{ AdminCheck: state.AdminCheck, dispatcher }}
+      value={{ AdminCheck: JSON.parse(state.AdminCheck), dispatcher }}
     >
       {children}
     </AdminCheckContext.Provider>

@@ -1,22 +1,19 @@
 import React, { useState ,useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./AdminDashBoard.scss";
-import AdminImage from "./adminImage.png";
-import EventImage from "./conference.png";
+import AdminImage from "../../Images/Club-Logo/Logo-Color.png";
+import EventImage from "./icons8-event-100.png";
+import student from './conference.png'
 import ProjectImage from "./innovation.png";
 import GalleryImage from "./picture.png";
 import AboutUsImage from "./profile_1.png";
-import random from "./icons8-photo-gallery-94.png";
+import profile from "./icons8-profile-96.png";
 import { toast } from "react-toastify";
 import { Ripple } from 'primereact/ripple';
 import { AuthContext } from "../../Context/AuthContext";
 import { AdminCheckContext } from "../../Context/AdminCheckContext";
 
 const AdminDashBoard = (props) => {
-
-    // for table (project-page) delete funnction
-const [data,setData]=useState(false)
-
   const {dispatch}=useContext(AuthContext)
   const {dispatcher}=useContext(AdminCheckContext)
   const Navigate = useNavigate();
@@ -31,8 +28,6 @@ const [data,setData]=useState(false)
       position:toast.POSITION.TOP_CENTER,
       theme:"colored"
     })
-    setData(true)
-    props.sendProps(data)
     Navigate("/")
     
   };
@@ -73,7 +68,7 @@ const [data,setData]=useState(false)
           </Link>
           <Link className="link" to="/admin-add-faculty">
           <div className="Buttons">
-            <img className="img" src={EventImage}></img>
+            <img className="img" src={profile}></img>
             <span>Add Faculty Profile</span>
           </div>
           </Link>
@@ -83,11 +78,13 @@ const [data,setData]=useState(false)
             <span>Add Events</span>
           </div>
           </Link>
-          <div className="Buttons">
-            <img className="img" src={EventImage}></img>
-            <span>Add Events</span>
+          <Link className="link" to="/admin-add-student-members">
+          <div className="Buttons" >
+            <img className="img" src={student}></img>
+            <span>Add Student Members</span>
             <Ripple/>
           </div>
+          </Link>
           {/* <div className='Buttons'></div> */}
         </div>
       </div>

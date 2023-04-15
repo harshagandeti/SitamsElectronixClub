@@ -1,22 +1,28 @@
-.download-div{
+.download-div {
     display: flex;
-    color:rgb(0, 162, 255) ;
+    color: rgb(0, 162, 255);
     align-items: center;
-    justify-content: space-around;
     cursor: pointer;
     font-weight: 600;
-    &:hover{
-        color:rgb(0, 127, 200) ;
+
+    &:hover {
+        color: rgb(0, 127, 200);
+    }
+
+    .delete {
+        padding: 0 10px;
     }
 }
-.delete-div{
-    display: flex;
-    color:rgb(255, 0, 0) ;
-    align-items: center;
-    justify-content: space-around;
+
+.delete-div {
+
+    color: rgb(255, 0, 0);
     cursor: pointer;
     font-weight: 600;
-    &:hover{
+    border: none;
+    background-color: transparent;
+
+    &:hover {
         color: rgb(203, 0, 0);
     }
 }
@@ -35,58 +41,34 @@
         align-items: center;
         width: 100%;
         height: 10vh;
-        // :hover {
-        //     outline: auto;
-        //     outline-color: rgb(0, 221, 255);
-        //     outline-offset: 4px;
-        // }
-      
-
 
         .searchContainer {
             height: 100%;
+            width: 46%;
             display: flex;
             align-items: center;
-            background-color: #f5f5f5;
+            background-color: #000000;
             padding: 0 10px 0 10px;
-          
 
+            form {
+                width: 100%;
 
+                input {
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 10px;
+                    border: 1px solid #f0f0f0;
+                    outline-color: rgb(0, 221, 255);
 
-            .FaSearch {
-                background-color: #f5f5f5;
-                cursor: pointer;
-                border: 0;
-                height: 100%;
-                width: 80px;
-                padding: 12px 30px 10px 30px;
-                outline: none;
+                    &::-webkit-search-cancel-button {
+                        cursor: pointer;
 
-                #icon {
-                    outline: none;
-                }
-            }
-
-            .FaSearch:hover {
-                background-color: #f0f0f0;
-                cursor: pointer;
-            }
-
-            input {
-                height: 80%;
-                width: 400px;
-                font-size: 16px;
-                padding: 10px;
-                border: 1px solid #f0f0f0;
-                // margin-right: 10px;
-                outline-color: rgb(0, 221, 255);
-
-                &::-webkit-search-cancel-button {
-                    cursor: pointer;
+                    }
 
                 }
-
             }
+
+
         }
     }
 
@@ -94,10 +76,9 @@
 
     .sortContainer {
         display: flex;
-        background-color: #f5f5f5;
         height: 100%;
         outline: none;
-
+        width: 54%;
 
         .all-btn {
             height: 100%;
@@ -116,7 +97,6 @@
 
         button {
             outline: none;
-
             font-size: 18px;
             font-weight: 600;
             color: white;
@@ -158,11 +138,61 @@
         width: 100%;
         height: fit-content;
         margin: 20px 0 0 0;
+        overflow-x: auto;
 
-        
+        table {
+            width: 100%;
+            min-width: 1200px;
+            overflow: scroll;
+            border: 1px solid rgb(197, 197, 197);
+
+            .disable {
+                display: none;
+            }
+
+
+            .active {
+                display: block;
+            }
+
+            tr {
+                border: 1px solid rgb(255, 255, 255);
+            }
+
+            td {
+                padding: 10px;
+            }
+
+            .head {
+                height: 60px;
+                background-color: #c9c9c9;
+                width: 100%;
+                font-weight: 600;
+                font-size: 18px;
+
+                td {
+                    border: 1px solid whitesmoke;
+                }
+            }
+
+            .title {
+                width: 500px;
+                max-width: 660px;
+            }
+
+            .body {
+                height: 60px;
+
+                &:nth-child(even) {
+                    background-color: whitesmoke;
+                }
+            }
+        }
+
 
     }
-    .mobile{
+
+    .mobile {
         display: none;
     }
 }
@@ -170,6 +200,7 @@
 
 @media only screen and (max-width: 950px) {
     .PPMainDiv {
+
         .searchMainContainer {
             display: flex;
             flex-wrap: wrap;
@@ -179,11 +210,26 @@
             height: fit-content;
             margin: 0 0 30px 0;
 
-            .sortContainer {
-               
+            .searchContainer {
+                width: 100%;
                 height: 10vh;
+
+                input {
+                    width: 100%;
+                }
+
+            }
+
+            .sortContainer {
+
+                height: 10vh;
+                width: 100%;
                 margin: 10px;
                 outline: none;
+
+                button {
+                    font-size: 14px;
+                }
 
             }
 
@@ -193,19 +239,20 @@
 
         .Table {
             margin: 10px 0 10px 0;
-            .auth{
+
+            .auth {
                 display: none;
             }
         }
 
-        .mobile{
+        .mobile {
             display: none;
         }
-    
+
 
     }
 
-   
+
 }
 
 
@@ -213,9 +260,10 @@
 @media only screen and (max-width: 480px) {
     .PPMainDiv {
         height: 100vh;
+
         .searchMainContainer {
             display: none;
-         
+
 
 
 
@@ -226,7 +274,7 @@
             display: none;
         }
 
-        .mobile{
+        .mobile {
             display: inline;
         }
 

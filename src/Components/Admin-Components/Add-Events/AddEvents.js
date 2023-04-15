@@ -53,7 +53,7 @@ const AddEvents = (props) => {
   };
   const postHandler = async () => {
     try {
-      const docRef = await addDoc(collection(db, "NewEvents"), {
+      const docRef = await addDoc(collection(db, "Admin-Add-Events"), {
         event,
         cardColor,
       });

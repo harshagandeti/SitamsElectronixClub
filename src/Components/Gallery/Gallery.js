@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { db } from "../../Config";
-import { collection, deleteDoc, doc ,onSnapshot} from "firebase/firestore";
-
-import ImgSrc_1 from "./GalleryImg/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg";
-import ImgSrc_2 from "./GalleryImg/photo-1541963463532-d68292c34b19.jpeg";
-import ImgSrc_3 from "./GalleryImg/Electronics Logo - Made with PosterMyWall.jpg";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 
 import { FaBackward, FaForward, FaRegTimesCircle } from "react-icons/fa";
 import { MdOutlineDeleteForever } from "react-icons/md";
@@ -14,29 +10,48 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./Gallery.scss";
 import SectionHeading from "../Section-Heading/SectionHeading";
+import { AdminCheckContext } from "../Context/AdminCheckContext";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
 const WSPGallery = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState();
-
+  const { AdminCheck } = useContext(AdminCheckContext);
+  const [visible, setVisible] = useState(false);
+  const [id, setId] = useState("");
+  const footerContent = (
+    <div>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        onClick={() => setVisible(false)}
+        className="p-button-warning"
+      />
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        onClick={() => deletefunc(id)}
+        className="p-button-success"
+        autoFocus
+      />
+    </div>
+  );
 
   const handleOpenModal = (index) => {
     setSlideNumber(index);
     setOpenModal(true);
   };
   useEffect(() => {
-
-       const eventSnapshots = onSnapshot(
-      collection(db, "Gallery"),
+    const eventSnapshots = onSnapshot(
+      collection(db, "Admin-Add-Gallery-Images"),
       (Snapshots) => {
         const filterData = Snapshots.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
         setData(filterData);
-        console.log("filterdata:", filterData);
-        console.log("Gallery", data);
       },
       (error) => console.log(error)
     );
@@ -54,15 +69,21 @@ const WSPGallery = () => {
       ? setSlideNumber(data.length - 1)
       : setSlideNumber(slideNumber - 1);
   };
-  const deleteHandler = async(ID) => {
-  
-    const {id}=ID
-    const eventDeleteDoc = doc(db, "Gallery", id);
+  const deleteHandler = (ID) => {
+    const { id } = ID;
+    setId(id);
+    setVisible(true);
+
+    console.log(ID);
+  };
+  const deletefunc = async (id) => {
+    setVisible(false);
+    const eventDeleteDoc = doc(db, "Admin-Add-Gallery-Images", id);
     await deleteDoc(eventDeleteDoc);
-    toast.warning("Image deleted successfully",{
-      position:toast.POSITION.TOP_CENTER,
-      theme:"colored"
-    })
+    toast.warning("Image deleted successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      theme: "colored",
+    });
   };
 
   // Next Image
@@ -98,20 +119,38 @@ const WSPGallery = () => {
       <div className="galleryWrap">
         {data &&
           data.map((slide, index) => {
-            {/* const { id } = slide; */}
+            {
+              /* const { id } = slide; */
+            }
             return (
-              <div
-                className="single"
-                key={slide.id}
-               
-              >
-                <img src={slide.imgUrl}  onClick={() => handleOpenModal(index)} alt="" />
-                <button  onDoubleClick={() =>{deleteHandler({id:slide.id})}}  className="delete">
+              <div className="single" key={slide.id}>
+                <img
+                  src={slide.imgUrl}
+                  onClick={() => handleOpenModal(index)}
+                  alt=""
+                />
+                <button
+                  onClick={() => {
+                    deleteHandler({ id: slide.id });
+                  }}
+                  className={AdminCheck ? "delete" : "disable"}
+                >
                   Delete
                 </button>
               </div>
             );
           })}
+      </div>
+      <div className="card flex justify-content-center">
+        <Dialog
+          header="Delete"
+          visible={visible}
+          style={{ width: "50vw" }}
+          onHide={() => setVisible(false)}
+          footer={footerContent}
+        >
+          <p className="m-0">Are you sure you want to delete this image ?</p>
+        </Dialog>
       </div>
     </div>
   );

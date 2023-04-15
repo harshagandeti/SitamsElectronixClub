@@ -11,17 +11,13 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import {auth } from '../../../Config';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { AuthContext } from "../../Context/AuthContext";
-import AdminAbout from "../Admin-About/AdminAbout";
 import { AdminCheckContext } from "../../Context/AdminCheckContext";
-const AdminAuth = (props) => {
+const AdminAuth = () => {
   const usenavigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const {dispatch}=useContext(AuthContext)
   const {dispatcher}=useContext(AdminCheckContext)
-
-  // for table (project-page) delete funnction
-  const [isAuth,setIsAuth]=useState(false)
 
   const data = {
     username: "Admin@sitams",
@@ -30,14 +26,8 @@ const AdminAuth = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(username);
-    console.log(password);
-
-
     Validation();
     LoginProcess();
-
-
     setUsername("");
     setPassword("");
   };
@@ -47,14 +37,12 @@ const AdminAuth = (props) => {
       const authCheck= signInWithEmailAndPassword(auth,username,password) .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        console.log(user)
         dispatch({type:"LOGIN",payload:user})
         dispatcher({type:"LOGIN",payload:true})
         toast.success("Login Successfully",{
           position:toast.POSITION.TOP_CENTER,
           theme:"colored"
         })
-        setIsAuth(true)
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("password", password);
         usenavigate("/admin-dash-board");
@@ -62,7 +50,6 @@ const AdminAuth = (props) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setIsAuth(false)
         toast.error("Please enter valid username or Password", {
           position: toast.POSITION.TOP_CENTER,
           theme:"colored"

@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import { AuthContextProvider } from "./Components/Context/AuthContext";
 import { AdminCheckContextProvider } from "./Components/Context/AdminCheckContext";
+import "primeicons/primeicons.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

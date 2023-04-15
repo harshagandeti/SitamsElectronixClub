@@ -158,7 +158,7 @@ const AddFaculty = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
       try {
-        const docRef = await addDoc(collection(db, "NewFaculty"), {
+        const docRef = await addDoc(collection(db, "Admin-Add-Faculty-Profiles"), {
           about,
           timeStamp: serverTimestamp(),
         });

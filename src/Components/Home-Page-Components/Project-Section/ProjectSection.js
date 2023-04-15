@@ -3,7 +3,7 @@ import ProjectCard from "./ProjectsCard/ProjectCard";
 import "./ProjectSection.scss";
 import SectionHeading from "../Section-Heading/SectionHeading";
 import { RxDoubleArrowRight } from "react-icons/rx";
-
+import { Link } from "react-router-dom";
 const ProjectSection = () => {
   return (
     <div className="ProjectSectionMainDiv">
@@ -15,7 +15,9 @@ const ProjectSection = () => {
         <ProjectCard />
       </div>
       <div className="btnPrs">
-        <span>See More </span>
+        <Link className="link" to="/projects">
+          <span>See More </span>
+        </Link>
         <RxDoubleArrowRight className="rightArrow" size={20} />
       </div>
     </div>

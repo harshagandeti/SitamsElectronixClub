@@ -1,18 +1,196 @@
-.board-section{
+.board-section {
     margin-bottom: 7rem;
-    
-    .section-heading{
+
+    .section-heading {
         margin: 7rem 0 3rem 0;
     }
 
-    .board-list{
+    .board-list {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: flex-start;
         position: relative;
 
-        .circle{
+        .board-member-card {
+            width: 20%;
+            margin: 0 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &:hover .img-container {
+                // transform: scale(1.2);
+
+                .img,
+                .out-img {
+                    transform: translateX(-50%) scale(0.97);
+                    filter: blur(1px) brightness(70%);
+                }
+
+                .links {
+                    display: inline;
+                }
+            }
+
+            .img-container {
+                width: 18rem;
+                height: 23rem;
+                margin: 5rem 5rem 2rem 5rem;
+                background: transparent;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.5s;
+
+                .out-img {
+                    position: absolute;
+                    bottom: 0;
+                    left: 40%;
+                    width: 15rem;
+                    height: 15rem;
+                    transition: all 0.5s;
+                    transform: translateX(-50%) scale(1.1);
+                    height: 22rem;
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 15rem;
+                    height: 15rem;
+                    background: transparent;
+                    border-radius: 50%;
+                    z-index: 1;
+                    box-shadow: 0 100px 0 40px #fff;
+                    z-index: 80;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 15rem;
+                    height: 15rem;
+                    box-sizing: border-box;
+                    border-radius: 50%;
+                    border: 4px solid transparent;
+                    //   border-bottom: 4px solid #272727;
+                    //   border-right: 4px solid #272727;
+                    //   border-left: 4px solid #272727;
+                }
+
+                .border {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 15rem;
+                    height: 15rem;
+                    background: #ccc; //#ccc
+                    overflow: hidden;
+                    border-radius: 50%;
+                    //   border: 4px solid #272727;
+                }
+
+
+                .img {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transition: all 0.5s;
+                    transform: translateX(-50%) scale(1.1);
+                    height: 22rem;
+                    //   transform: scale(1.2);
+                }
+
+                .links {
+                    width: fit-content;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    display: none;
+                    cursor: pointer;
+                    z-index: 99;
+
+                    a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 2.5rem;
+                        transition: all 0.2s;
+
+                        &:not(:last-child) {
+                            margin-right: 2rem;
+                        }
+                    }
+
+                    .linkedin:hover {
+                        color: #0e76a8;
+                    }
+
+                    .instagram:hover {
+                        color: #dd2a7b;
+                    }
+
+                    .github:hover {
+                        color: #211f1f;
+                    }
+
+                    .delete {
+                        opacity: 0.5;
+                        color: red;
+                    }
+
+                    .delete:hover {
+
+                        opacity: 1;
+
+                    }
+
+                }
+            }
+
+            .name {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.4rem;
+                line-height: 1.6rem;
+                text-align: center;
+                letter-spacing: 0.12em;
+            }
+
+            button {
+                border: 0;
+                color: red;
+                opacity: 0.5;
+                background-color: transparent;
+                font-size: 30px;
+                position: absolute;
+                top: 20%;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+            }
+
+            .post {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 1.7rem;
+                line-height: 1.4rem;
+                text-align: center;
+                letter-spacing: 0.12em;
+                color: #676767;
+            }
+        }
+
+
+        .circle {
             position: absolute;
             top: 49%;
             left: 50%;
@@ -21,16 +199,56 @@
     }
 }
 
-@media only screen and (max-width: 950px){
-    .board-section{
-        .section-heading{
-            h1{
+@media only screen and (max-width: 950px) {
+    .board-section {
+        margin-bottom: 0;
+
+        .section-heading {
+            h1 {
                 font-size: 4.2rem !important;
             }
         }
-        
-        .board-list{
-            .circle{
+
+        .board-list {
+            .board-member-card {
+                width: 50%;
+                margin: 0;
+
+                .img-container {
+                    width: 16rem;
+                    height: 22rem;
+
+                    .out-img {
+                        width: 11rem;
+                        height: 19rem;
+                        left: 46.9%;
+                    }
+
+                    .img {
+                        width: 11rem;
+                        height: 19rem;
+
+                        //   transform: scale(1.2);
+                    }
+
+                    &::before,
+                    &::after {
+                        left: 47.2%;
+                        transform: translateX(-50%);
+                        width: 12rem;
+                        height: 12rem;
+                    }
+
+                    .border {
+                        left: 10%;
+                        width: 12rem;
+                        height: 12rem;
+                    }
+                }
+
+            }
+
+            .circle {
                 display: none;
                 visibility: hidden;
             }
@@ -38,12 +256,78 @@
     }
 }
 
-@media only screen and (max-width: 470px){
-    .board-section{
-        .section-heading{
-            h1{
+@media only screen and (max-width: 470px) {
+    .board-section {
+        .section-heading {
+            h1 {
                 font-size: 17px !important;
                 line-height: 25px;
+            }
+        }
+
+        .board-list {
+            .board-member-card {
+                margin-bottom: 2rem;
+
+                .img-container {
+                    width: 10rem;
+                    height: 16rem;
+                    margin: 2rem 2rem 1rem 2rem;
+
+                    .out-img {
+                        width: 6rem;
+                        height: 10rem;
+                        left: 50%;
+                    }
+
+                    .img {
+                        width: 6rem;
+                        height: 10rem;
+
+                        //   transform: scale(1.2);
+                    }
+
+                    &::before,
+                    &::after {
+                        left: 50.9%;
+                        transform: translateX(-50%);
+                        width: 7rem;
+                        height: 7rem;
+                        bottom: -2;
+                    }
+
+
+                    .border {
+                        width: 7rem;
+                        height: 7rem;
+                    }
+
+                    .border {
+                        left: 16%;
+                    }
+
+                    .links {
+
+                        a {
+                            font-size: 1.2rem;
+                        }
+                    }
+
+
+
+                }
+
+                .name {
+                    font-size: 17px;
+                    line-height: 21px;
+                }
+
+                .post {
+                    font-size: 14px;
+                    line-height: 16px;
+                }
+
+
             }
         }
     }

@@ -66,7 +66,7 @@ const AddImages = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const docRef = await addDoc(collection(db, "Gallery"), {
+      const docRef = await addDoc(collection(db, "Admin-Add-Gallery-Images"), {
         title,
         imgUrl,
         timeStamp:serverTimestamp(),

@@ -21,7 +21,7 @@
         .Container {
             width: 550px;
             min-height: 400px;
-            background-color: whitesmoke;
+            background-color: rgb(247, 247, 247);
             margin: 20px 20px;
             border-radius: 10px;
             z-index: 1;
@@ -30,7 +30,7 @@
 
             .edit-icon {
                 position: absolute;
-                top: 5px;
+                top: 0px;
                 right: 20px;
                 opacity: .5;
 
@@ -42,6 +42,18 @@
                     color: rgb(0, 86, 139);
                     cursor: pointer;
                 }
+            }
+            .delete-icon {
+                position: absolute;
+                top: 16px;
+                right: 50px;
+                opacity: .5;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+
             }
 
             .header {
@@ -85,6 +97,7 @@
 
             .content {
                 margin: 20px 0;
+                text-align: justify;
             }
         }
 
@@ -127,6 +140,40 @@
 
 
 
+@media screen and (max-width:991px) {
+    .Abtus-Main-Div {
+        padding: 10px 0 0 0;
+        height: max-content;
+
+        .Abt-Containers {
+            flex-direction: column;
+            margin: 10px 5px;
+
+           
+
+        }
+
+        .Board {
+            height: fit-content;
+        }
+
+
+      
+
+        .Circle {
+            display: none;
+
+        }
+
+        .Circle-1 {
+
+            display: none;
+
+        }
+
+    }
+
+}
 @media screen and (max-width:500px) {
     .Abtus-Main-Div {
         padding: 10px 0 0 0;

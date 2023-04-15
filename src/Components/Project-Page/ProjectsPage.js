@@ -6,66 +6,81 @@ import { Column } from "primereact/column";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import SectionHeading from "../Section-Heading/SectionHeading";
 import "./ProjectsPage.scss";
-import "primeicons/primeicons.css";
-import "primereact/resources/primereact.min.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { FilterMatchMode, FilterOperator } from "primereact/api";
+
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // firebase config &libraries
-import { db } from "../../Config";
+import { db, Storage } from "../../Config";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import {
   collection,
   getDocs,
   onSnapshot,
   query,
-  orderBy,
+  doc,
+  deleteDoc,
   where,
 } from "firebase/firestore";
 import { AdminCheckContext } from "../Context/AdminCheckContext";
 
-const ProjectsPage = (props) => {
-  const [isAuth, setIsAuth] = useState(false);
+const ProjectsPage = () => {
   const [project, setProject] = useState();
   const [globalFilterValue, setGlobalFilterValue] = useState("");
-  const {AdminCheck}=useContext(AdminCheckContext)
-  const [filters, setFilters] = useState({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  const { AdminCheck } = useContext(AdminCheckContext);
+
+  const [visible, setVisible] = useState(false);
+  const [deleteData, setDeleteData] = useState({
+    id:"",
+    url:"",
   });
-
-  useEffect(() => {
-getData()
-  }, []);
-
-const getData=()=>{
-  const eventSnapshots = onSnapshot(
-    collection(db, "New-Projects"),
-    (Snapshots) => {
-      const filterData = Snapshots.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setProject(filterData);
-      console.log("projects", project);
-    },
-    (error) => console.log(error)
+  const{id,url}=deleteData
+  const footerContent = (
+    <div>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        onClick={() => setVisible(false)}
+        className="p-button-warning"
+      />
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        onClick={() => deleteFunc(id,url)}
+        className="p-button-success"
+        autoFocus
+      />
+    </div>
   );
 
-  return () => eventSnapshots();
-}
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    const eventSnapshots = onSnapshot(
+      collection(db, "Admin-Add-Projects"),
+      (Snapshots) => {
+        const filterData = Snapshots.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setProject(filterData);
+      },
+      (error) => console.log(error)
+    );
+
+    return () => eventSnapshots();
+  };
   // Searching & Sorting
 
-  const onGlobalFilterChange = (e) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
-    _filters["global"].value = value;
-    setFilters(_filters);
-    setGlobalFilterValue(value);
-  };
-
   const filterHandler = async (Click) => {
-    const Type=Click.click
+    const Type = Click.click;
     const q = query(
-      collection(db, "New-Projects"),
+      collection(db, "Admin-Add-Projects"),
       where("project.type", "==", Type)
     );
     const querySnapshot = await getDocs(q);
@@ -74,39 +89,38 @@ const getData=()=>{
       id: doc.id,
     }));
     setProject(filterData);
-    console.log("projects", project);
-    console.log("working");
   };
 
+  const deleteFile = (id) => {
+    const desertRef = ref(Storage, id);
+    deleteObject(desertRef)
+      .then(() => {
+        console.log("Deleteed file also along with project ");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  // table boady icons
+  const deletHandler = async (ID) => {
+    setVisible(true)
+    const id = ID.id;
+    const img = ID.img;
+    setDeleteData({...deleteData,id:id,url:img})
 
-  const downloadIcon = (
-    <div
-      className="download-div"
-      onClick={() => {
-        console.log("download");
-      }}
-    >
-      <i className="pi pi-download"></i>
-      <span>Download</span>
-    </div>
-  );
-  const deleteIcon = (
-    <div
-      className="delete-div"
-      onClick={() => {
-        return <input type="dow"></input>;
-      }}
-    >
-      <RiDeleteBin6Line className="delete" />
-      <span>Delete</span>
-    </div>
-  );
+  };
+  const deleteFunc= async(id,url)=>{
+  
+    deleteFile(url);
+    const eventDeleteDoc = doc(db, "Admin-Add-Projects", id);
+    await deleteDoc(eventDeleteDoc);
+    setVisible(true)
+    toast.warning("Event Details deleted successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      theme: "colored",
+    });
 
-const deletHandler=(id)=>{
-
-}
+  }
 
   return (
     <div className="PPMainDiv">
@@ -117,74 +131,105 @@ const deletHandler=(id)=>{
             <input
               type="search"
               value={globalFilterValue}
-              onChange={onGlobalFilterChange}
               placeholder="Search keys "
             ></input>
           </form>
         </div>
         <div className="sortContainer">
-          <button  className="all-btn" onClick={()=>{getData()}}>All</button>
+          <button
+            className="all-btn"
+            onClick={() => {
+              getData();
+            }}
+          >
+            All
+          </button>
           <button
             className="nth-1"
             onClick={() => {
-              filterHandler({click:"Mini project"})
+              filterHandler({ click: "Mini project" });
             }}
           >
             Mini Project
           </button>
-          <button className="nth-2" onClick={() => {
-              filterHandler({click:"Final year project"})
-            }}>
+          <button
+            className="nth-2"
+            onClick={() => {
+              filterHandler({ click: "Final year project" });
+            }}
+          >
             Final Year Project
           </button>
-          <button className="nth-3" onClick={() => {
-              filterHandler({click:"Personal project"})
-            }}>
+          <button
+            className="nth-3"
+            onClick={() => {
+              filterHandler({ click: "Personal project" });
+            }}
+          >
             Personal Project
           </button>
         </div>
       </div>
 
       <div className="Table">
-        <div className="card">
-          <DataTable
-            value={project}
-            dataKey="id"
-            globalFilterFields={[
-              "project.title",
-              "project.year",
-              "project.type",
-            ]}
-            showGridlines
-            filters={filters}
-            stripedRows
-            // filterDisplay="row"
-            emptyMessage="No projects found."
-            paginator
-            rows={10}
-            rowsPerPageOptions={[5, 10, 25, 50]}
-            tableStyle={{ minWidth: "50rem" }}
-          >
-            <Column
-              field="project.title"
-              header="Title of the project"
-            ></Column>
-            <Column field="project.year" header="Passed out year"></Column>
-            <Column field="project.type" header="Type of project"></Column>
-            <Column
-              field="Document"
-              body={downloadIcon}
-              onClick="id"
-              header="Document"
-            ></Column>
-            <Column hidden={AdminCheck} body={deleteIcon}  header="Delete"></Column>
-          </DataTable>
-        </div>
+        <table>
+          <tbody>
+            <tr className="head">
+              <td className="title">Title</td>
+              <td>Project year</td>
+              <td>Type of project</td>
+              <td>Download document</td>
+              <td className={AdminCheck ? "active" : "disable"}>
+                Delete project
+              </td>
+            </tr>
+            {project &&
+              project.map((item, index) => (
+                <tr className="body" key={item.id}>
+                  <td>{item.project.title}</td>
+                  <td>{item.project.year}</td>
+                  <td>{item.project.type}</td>
+                  <td>
+                    <a
+                      className="download-div"
+                      download={item.project.docUrl}
+                      href={item.project.docUrl}
+                    >
+                      <i className="pi pi-download"></i>
+                      <span>Download</span>
+                    </a>
+                  </td>
+                  <td>
+                    <button
+                      className={AdminCheck ? "delete-div" : "disable"}
+                      onClick={() => {
+                        deletHandler({ id: item.id, img: item.project.docUrl });
+                      }}
+                    >
+                      <RiDeleteBin6Line className="delete" />
+                      <span>Delete</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
       <div className="mobile">
         <span>This page not support in mobile phone</span>
         <br />
         <span>Otherwise Your mobile keep in Desktop Mode</span>
+      </div>
+      <div className="card flex justify-content-center">
+        <Dialog
+          header="Delete"
+          visible={visible}
+          style={{ width: "50vw" }}
+          onHide={() => setVisible(false)}
+          footer={footerContent}
+        >
+          <p className="m-0">Are you sure you want to delete this project ?</p>
+        </Dialog>
       </div>
     </div>
   );

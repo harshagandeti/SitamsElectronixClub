@@ -65,7 +65,7 @@ const AddProjects = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
             toast.info("Document upload to firebase successfully");
-            setProgress(false)
+            setSpinner(false)
             setProject((prev) => ({ ...prev, docUrl: downloadUrl }));
           });
         }
@@ -77,12 +77,10 @@ const AddProjects = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit:", project,file);
     try {
-      const docRef = await addDoc(collection(db, "New-Projects"), {
+      const docRef = await addDoc(collection(db, "Admin-Add-Projects"), {
         project,
       });
-      console.log("Document written with ID: ", docRef.id);
       toast.success("New Project Added Successfully",{
         position:toast.POSITION.TOP_CENTER,
         theme:"colored"})

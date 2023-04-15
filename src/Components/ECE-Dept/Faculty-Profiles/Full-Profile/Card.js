@@ -1,65 +1,60 @@
 import React, { useEffect, useState } from "react";
 import "./Card.scss";
-import Profile from "../../../Images/Profile-1.png";
-import { Link, Outlet, useLocation } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { About, PhD_, UG_PG, Other_Details } from "./Assets/Components";
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { db } from "../../../../Config";
-import { collection, getDoc, doc,onSnapshot } from "firebase/firestore";
+import { collection, getDoc, doc, ref, onSnapshot } from "firebase/firestore";
 
 const FullProfile = () => {
   // const [id, setId] = useState("");
   const [profile, setProfile] = useState({});
   const location = useLocation();
   const id = location.state;
-  console.log("id:", id);
-
-  // useEffect(() => {
-  //   const profileSnapshots = onSnapshot(
-  //     collection(db, "NewFaculty"),
-  //     (Snapshots) => {
-  //       const filterData = Snapshots.docs.map((doc) => ({
-  //         ...doc.data(),
-  //         id: doc.id,
-  //       }));
-  //       setProfile(filterData);
-  //       console.log("filterdata:", filterData);
-  //     },
-  //     (error) => console.log(error)
-  //   );
-  //   return () => profileSnapshots();
-  // }, []);
 
   useEffect(() => {
     const getSingleProfile = async () => {
-      const docRef = doc(db, "NewFaculty", id);
-      const docSnap = await getDoc(docRef);
-     setProfile({...docSnap.data()})
-     console.log(profile)
-    }
-  getSingleProfile();
-  },);
+      const ref = doc(db, "Admin-Add-Faculty-Profiles", id);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()) {
+        const doc = docSnap.data();
+        setProfile(doc);
+      } else {
+        console.log("No such document!");
+      }
+    };
+    id && getSingleProfile();
+  }, [id]);
 
   const { about } = profile;
 
   return (
     <div className="Card-Full">
-      {profile ? (
+      {profile && (
         <div className="Container">
+          <Link to="/ece-dept">
+            <button className="button">
+              <AiOutlineArrowLeft size={20} />
+              Back
+            </button>
+          </Link>
           <div className="upper-container">
             <div className="img-div">
-              <img src={Profile}></img>
+              <img src={about?.imgUrl}></img>
             </div>
             <div className="section-right">
               <div className="upper-content">
-                <div className="text-div Name">{about.name}</div>
-                <div className="text-div desigination">Professor & HOD</div>
+                <div className="text-div Name">{about?.name}</div>
+                <div className="text-div desigination">
+                  {about?.designation}
+                </div>
                 <div className="text-div dept">ECE,Sitams</div>
               </div>
+              {console.log("about", about)}
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                   <button
@@ -122,7 +117,7 @@ const FullProfile = () => {
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              <About />
+              <About data={about} />
             </div>
             <div
               className="tab-pane fade"
@@ -130,7 +125,7 @@ const FullProfile = () => {
               role="tabpanel"
               aria-labelledby="nav-profile-tab"
             >
-              <UG_PG />
+              <UG_PG data={about} />
             </div>
             <div
               className="tab-pane fade"
@@ -138,7 +133,7 @@ const FullProfile = () => {
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              <PhD_ />
+              <PhD_ data={about} />
             </div>
             <div
               className="tab-pane fade"
@@ -146,12 +141,10 @@ const FullProfile = () => {
               role="tabpanel"
               aria-labelledby="nav-disabled-tab"
             >
-              <Other_Details />
+              <Other_Details data={about} />
             </div>
           </div>
         </div>
-      ) : (
-        <h2>Loading...</h2>
       )}
     </div>
   );

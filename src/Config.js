@@ -2,13 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import {getAuth} from "firebase/auth"
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBYfynyd5KtESG_CppzCc_KwguU7x6xC4s",
-  authDomain: "sitams-electronix-club.firebaseapp.com",
-  projectId: "sitams-electronix-club",
-  storageBucket: "sitams-electronix-club.appspot.com",
-  messagingSenderId: "457970109452",
-  appId: "1:457970109452:web:deecf4637795b1fd7e3229",
+  apiKey: "AIzaSyDrSGslXF_U-B84gD45EYKQyPHuLvOnS0M",
+  authDomain: "sitamselectronixclub-database.firebaseapp.com",
+  projectId: "sitamselectronixclub-database",
+  storageBucket: "sitamselectronixclub-database.appspot.com",
+  messagingSenderId: "162971995495",
+  appId: "1:162971995495:web:a7a4beaa160373879eb3c2",
+  measurementId: "G-851K9DBPG7"
 };
 
 const app = initializeApp(firebaseConfig);

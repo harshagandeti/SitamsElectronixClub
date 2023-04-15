@@ -204,8 +204,7 @@ const DomainSection = () => {
             <div className="face face2">
               <div className="content">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                  cum cumque minus iste veritatis provident at.
+                  Love.
                 </p>
                 <a href="#">Read More</a>
               </div>
@@ -220,8 +219,8 @@ const DomainSection = () => {
             <div className="face face2">
               <div className="content">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                  cum cumque minus iste veritatis provident at.
+                  computer is computer 
+                 which we can swee
                 </p>
                 <a href="#">Read More</a>
               </div>

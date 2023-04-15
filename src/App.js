@@ -27,13 +27,10 @@ import UpdateProfile from "./Components/Admin-Components/Update-pages/FacultyPro
 import { useContext, useState } from "react";
 import { AuthContext } from "./Components/Context/AuthContext";
 import AdminAbout from "./Components/Admin-Components/Admin-About/AdminAbout";
+import AddStudentMembers from "./Components/Admin-Components/Add-Student-Members/AddStudentMembers";
 
 
 function App() {
-
-  const [logout,setLogout]=useState(null)
-  const [events,setEvents]=useState([])
-  console.log("APP:",events)
 const {authAdmin}=useContext(AuthContext)
 
 const ReqiuredAuth=({children})=>{
@@ -47,7 +44,7 @@ return authAdmin ? children :<Navigate to='/'></Navigate>
           <Header />
           <NavBar />
           <Routes>
-            <Route path="/" exact element={<Home events={events} />}></Route>
+            <Route path="/" exact element={<Home  />}></Route>
             <Route path="/gallery"  element={<Gallery />}></Route>
             <Route path="/projects"  element={<ProjectsPage />}></Route>
             <Route path="/events"  element={<Events />}></Route>
@@ -61,6 +58,7 @@ return authAdmin ? children :<Navigate to='/'></Navigate>
             <Route path="/admin-add-faculty"  element={<ReqiuredAuth><AddFaculty /></ReqiuredAuth>}></Route>
             <Route path="/admin-Update-faculty"  element={<ReqiuredAuth><UpdateProfile /></ReqiuredAuth>}></Route>
             <Route path="/admin-add-gallery-img"  element={<ReqiuredAuth><AddImages /></ReqiuredAuth>}></Route>
+            <Route path="/admin-add-student-members"  element={<ReqiuredAuth><AddStudentMembers /></ReqiuredAuth>}></Route>
             <Route path="/domain-web-development"  element={<WebDevelopement />}></Route>
             <Route path="/domain-machine-learning"  element={<MachineLearning />}></Route>
             <Route path="/domain-machine-learning"  element={<MachineLearning />}></Route>

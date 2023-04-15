@@ -12,8 +12,7 @@ import Ticker from "../Home-Page-Components/Ticker/Ticker";
 // styling
 import "./Home.scss";
 import SocialMedia from "../SocialMedia/SocialMedia";
-const Home = ({events}) => {
-  console.log("Home:",events)
+const Home = () => {
   const about = About;
   const vision = Vision;
   const { VisonParagraph, VisionHeading } = vision;
@@ -21,7 +20,7 @@ const Home = ({events}) => {
   return (
     <div className="Home-Main">
       <LandingPage />
-      <Ticker events={events}/>
+      <Ticker />
       <AboutAndVision
         AboutHeading={AboutHeading}
         About={AboutParagraph}

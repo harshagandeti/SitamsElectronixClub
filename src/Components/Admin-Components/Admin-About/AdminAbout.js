@@ -127,8 +127,8 @@ const AdminAbout = () => {
             <input
               type="text"
               className="input"
-              placeholder="designation"
-              name="roleText"
+              placeholder="desgination"
+              name="desgination"
               value={desgination}
               onChange={changeHandler}
             ></input>

@@ -30,8 +30,6 @@ const UpdateProfile = () => {
   const Navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
-  const [id_, setId] = useState("");
-
   const [about, setAbout] = useState({
     faculty_id: "",
     name: "",
@@ -111,10 +109,9 @@ const UpdateProfile = () => {
   } = about;
   useEffect(() => {
     id && getSingleProfile();
-    setId(id);
   }, [id]);
   const getSingleProfile = async () => {
-    const docRef = doc(db, "NewFaculty", id);
+    const docRef = doc(db, "Admin-Add-Faculty-Profiles", id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
@@ -128,6 +125,7 @@ const UpdateProfile = () => {
 
   const changeHandler = (e) => {
     setAbout({ ...about, [e.target.name]: e.target.value });
+    console.log(e.target.value)
     // setOtherDetails({ ...otherDetails, [e.target.name]: e.target.value });
   };
 
@@ -172,20 +170,23 @@ const UpdateProfile = () => {
 
     file && uploadFile();
   }, [file]);
-  console.log("id_:", id_);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-
+   
+    console.log("e.target.value",e.target.value)
+    const {id}=e.target.value
+     console.log("inside func id:", id);
     try {
       // await db.collection("NewFaculty").doc(id).update({
       //   ...about, timeStamp: serverTimestamp(),
       // })
-      // const doc =await db.collection("NewFaculty").dco(id).get()
+      // const doc =await db.collection("NewFaculty").doc(id).get()
       // const user={
       //   ...doc.data(),id:doc.id
       // }
       // console.log(user)
-      const docRef = await   setDoc(doc(collection(db, "NewFaculty", id)), {
+      const docRef = await   updateDoc(doc(collection(db, "Admin-Add-Faculty-Profiles", id)), {
         ...about,
         timeStamp: serverTimestamp(),
       });
