@@ -5,13 +5,13 @@ import {getAuth} from "firebase/auth"
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDrSGslXF_U-B84gD45EYKQyPHuLvOnS0M",
-  authDomain: "sitamselectronixclub-database.firebaseapp.com",
-  projectId: "sitamselectronixclub-database",
-  storageBucket: "sitamselectronixclub-database.appspot.com",
-  messagingSenderId: "162971995495",
-  appId: "1:162971995495:web:a7a4beaa160373879eb3c2",
-  measurementId: "G-851K9DBPG7"
+  apiKey: "AIzaSyCbVSg17N16B-luur9vyQvNePJyVNCax5o",
+  authDomain: "sitams-electronix-club-db.firebaseapp.com",
+  projectId: "sitams-electronix-club-db",
+  storageBucket: "sitams-electronix-club-db.appspot.com",
+  messagingSenderId: "269794975720",
+  appId: "1:269794975720:web:33f5e7dffeee623e3c8e5d",
+  measurementId: "G-GCHS3SXD4Q"
 };
 
 const app = initializeApp(firebaseConfig);

@@ -96,8 +96,7 @@ const AddImages = () => {
       <div className="Container-box">
       <div className={spinner?" Spinner flex justify-content-center" :"disable"}>
             <ProgressSpinner />
-            <h4> Imaging uploading {Math.floor(progress)}%</h4>
-            <h5>After Completion of document uploading <span>Click Submit Button</span></h5>
+            <h4> Image uploading to firebase {Math.floor(progress)}%</h4>
         </div>
         <div className="Left">
           <img src={AddImage}></img>
